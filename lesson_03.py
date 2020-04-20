@@ -1,4 +1,5 @@
 import datetime
+import os
 import random
 import string
 from faker import Faker
@@ -9,6 +10,9 @@ from flask import Flask
 
 print("hello")
 app = Flask('app')
+
+# Constants
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 @app.route('/')
 def hello():
@@ -29,7 +33,8 @@ def gen_password():
 
 @app.route('/read-requirements')
 def read_requirements():
-    file_path = '/Users/ivan/PythonProjects/TestProject/requirements.txt'
+
+    file_path = ROOT_DIR + '/requirements.txt'
     file = open(file_path, 'r')
     file_contents = file.read()
     result_string = ''.join(file_contents)
@@ -47,7 +52,7 @@ def random_users():
 
 @app.route('/average-height-weight')
 def average_height_weight():
-    file_path = '/Users/ivan/PythonProjects/TestProject/hw.csv'
+    file_path = ROOT_DIR + '/hw.csv'
     data = pd.read_csv(file_path, header=0, names = ["index", "height", "weight"])
     height_mean_cm = round(data["height"].mean() * 2.54, 2)
     weight_mean_kg = round(data["weight"].mean() / 2.205, 2)
