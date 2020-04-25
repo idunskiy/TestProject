@@ -103,7 +103,7 @@ def get_unique_firstnames():
 
 @app.route('/filter-by-state-and-city')
 def get_filtered_by_state_and_city():
-    query = 'SELECT * FROM customers GROUP BY COUNTRY, CITY'
+    query = 'SELECT * FROM customers GROUP BY STATE, CITY'
     records = execute_query(query)
     return str(records)
 
