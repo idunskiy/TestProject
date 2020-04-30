@@ -27,7 +27,7 @@ def now():
 
 @app.route('/gen-password')
 def gen_password():
-    length = request.args['length']
+    length = request.args.get['length']
     try:
         val = int(length)
         if (val > 0):
