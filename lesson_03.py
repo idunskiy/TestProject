@@ -27,7 +27,7 @@ def now():
 
 @app.route('/gen-password')
 def gen_password():
-    length = request.args['length']
+    length = request.args.get['length']
     try:
         val = int(length)
         if (val > 0):
@@ -55,10 +55,9 @@ def handle_bad_request(error):
 def read_requirements():
 
     file_path = ROOT_DIR + '/requirements.txt'
-    file = open(file_path, 'r')
-    file_contents = file.read()
-    result_string = ''.join(file_contents)
-    file.close()
+    with open(file_path, 'r') as file:
+        file_contents = file.read()
+        result_string = ''.join(file_contents)
     return result_string;
 
 @app.route('/100-random-users')
@@ -103,7 +102,9 @@ def get_unique_firstnames():
 
 @app.route('/filter-by-state-and-city')
 def get_filtered_by_state_and_city():
-    query = 'SELECT * FROM customers GROUP BY STATE, CITY'
+    state = request.args.get('state', 'AB')
+    city = request.args.get('city', 'Edmonton')
+    query = f'SELECT * FROM customers WHERE State = "{state}" AND City = "{city}"'
     records = execute_query(query)
     return str(records)
 
